@@ -1,4 +1,3 @@
-
 name: CICD
 
 on:
@@ -19,8 +18,17 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
-      - name: Build Project Maven
-        run: mvn clean install
+      - name: Build Project with Maven
+        run: mvn clean install \
+          -Dspring.application.name=${{ secrets.SPRING_APP_NAME }} \
+          -Dspring.datasource.url=${{ secrets.SPRING_DATASOURCE_URL }} \
+          -Dspring.datasource.username=${{ secrets.SPRING_DATASOURCE_USERNAME }} \
+          -Dspring.datasource.password=${{ secrets.SPRING_DATASOURCE_PASSWORD }} \
+          -Dspring.datasource.driver-class-name=${{ secrets.SPRING_DATASOURCE_DRIVER }} \
+          -Dspring.jpa.database-platform=${{ secrets.SPRING_JPA_PLATFORM }} \
+          -Dspring.jpa.hibernate.ddl-auto=${{ secrets.SPRING_JPA_DDL_AUTO }} \
+          -Dvalidation.url=${{ secrets.VALIDATION_URL }} \
+          -Dbalance-record.api.url=${{ secrets.BALANCE_RECORD_API_URL }}
       
       - name: Deploy to EB
         uses: einaregilsson/beanstalk-deploy@v21
