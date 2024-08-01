@@ -7,7 +7,8 @@ on:
 
 jobs:
   build-and-deploy:
-    runs-on: [ ubuntu-latest ]
+    runs-on: ubuntu-latest
+
     steps:
       - name: Checkout Source
         uses: actions/checkout@v4
@@ -19,16 +20,17 @@ jobs:
           java-version: '17'
 
       - name: Build Project with Maven
-        run: mvn clean install \
-          -Dspring.application.name=${{ secrets.SPRING_APP_NAME }} \
-          -Dspring.datasource.url=${{ secrets.SPRING_DATASOURCE_URL }} \
-          -Dspring.datasource.username=${{ secrets.SPRING_DATASOURCE_USERNAME }} \
-          -Dspring.datasource.password=${{ secrets.SPRING_DATASOURCE_PASSWORD }} \
-          -Dspring.datasource.driver-class-name=${{ secrets.SPRING_DATASOURCE_DRIVER }} \
-          -Dspring.jpa.database-platform=${{ secrets.SPRING_JPA_PLATFORM }} \
-          -Dspring.jpa.hibernate.ddl-auto=${{ secrets.SPRING_JPA_DDL_AUTO }} \
-          -Dvalidation.url=${{ secrets.VALIDATION_URL }} \
-          -Dbalance-record.api.url=${{ secrets.BALANCE_RECORD_API_URL }}
+        env:
+          SPRING_APP_NAME: ${{ secrets.SPRING_APP_NAME }}
+          SPRING_DATASOURCE_URL: ${{ secrets.SPRING_DATASOURCE_URL }}
+          SPRING_DATASOURCE_USERNAME: ${{ secrets.SPRING_DATASOURCE_USERNAME }}
+          SPRING_DATASOURCE_PASSWORD: ${{ secrets.SPRING_DATASOURCE_PASSWORD }}
+          SPRING_DATASOURCE_DRIVER: ${{ secrets.SPRING_DATASOURCE_DRIVER }}
+          SPRING_JPA_PLATFORM: ${{ secrets.SPRING_JPA_PLATFORM }}
+          SPRING_JPA_DDL_AUTO: ${{ secrets.SPRING_JPA_DDL_AUTO }}
+          VALIDATION_URL: ${{ secrets.VALIDATION_URL }}
+          BALANCE_RECORD_API_URL: ${{ secrets.BALANCE_RECORD_API_URL }}
+        run: mvn clean install
       
       - name: Deploy to EB
         uses: einaregilsson/beanstalk-deploy@v21
