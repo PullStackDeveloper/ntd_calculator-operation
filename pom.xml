@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.pullstackdeveloper</groupId>
 	<artifactId>ntd-calculator-operation</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.0</version>
 	<name>ntd-calculator-operation</name>
 	<description>ntd-calculator-operation</description>
 	<properties>
