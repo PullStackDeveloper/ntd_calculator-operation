@@ -98,7 +98,8 @@ public class CalculatorService {
                     break;
                 case "division":
                     if (secondOperand == 0) {
-                        throw new IllegalArgumentException("Division by zero");
+                        result = "Error: Division by zero";
+                        break;
                     }
                     result = divideNumbers.invoke(firstOperand, secondOperand);
                     break;
